@@ -37,3 +37,42 @@ body{touch-action:manipulation}
 @keyframes starBounce{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-.8vmin) rotate(6deg)}}
 .rotate{display:none;position:fixed;inset:0;place-items:center;background:linear-gradient(135deg,#8feee4,#ffe2ed);font-size:8vw;font-weight:900;color:#123b56;z-index:50}
 @media (orientation:portrait){.rotate{display:grid}.app{display:none}}
+
+
+/* apple1: v11安定版を壊さず、必要部分だけ上書き */
+.speech-clean{
+  left:75.2%;top:34.3%;width:23.5%;height:25.5%;
+  background:radial-gradient(ellipse at 50% 48%,rgba(255,255,255,.98) 0 62%,rgba(255,255,255,.82) 71%,rgba(255,255,255,0) 86%);
+  z-index:6;
+}
+.start-btn{
+  left:6.2%;top:5.2%;bottom:auto;transform:none;
+  padding:1.25vmin 4.3vmin 1.35vmin 4.0vmin;
+  border-radius:2.4vmin;
+  background:linear-gradient(180deg,#ff80af,#f24f8e);
+  color:#fff;
+  font-size:3.5vmin;
+  box-shadow:0 .8vmin 0 rgba(163,54,92,.28),0 0 0 .48vmin rgba(255,255,255,.88);
+  text-shadow:0 .18vmin .25vmin rgba(143,22,72,.25);
+}
+.start-btn::before{content:'▶';margin-right:.7vmin;font-size:3.2vmin;vertical-align:.04em}
+@keyframes startPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.045)}}
+.finish{background:rgba(255,244,252,.05)}
+.finish-card.apple-finish-card{
+  min-width:0;width:31vmin;height:31vmin;padding:0;border-radius:50%;
+  background:radial-gradient(circle at 50% 47%,rgba(255,255,255,.98) 0 54%,rgba(255,255,255,.78) 69%,rgba(255,255,255,0) 72%);
+  box-shadow:0 0 0 .72vmin rgba(255,255,255,.92),0 0 0 1.45vmin rgba(255,208,87,.72),0 0 5.2vmin rgba(255,211,84,.72),0 1.6vmin 4vmin rgba(0,63,90,.18);
+  display:grid;place-items:center;
+}
+.apple-again{
+  position:relative;width:100%;height:100%;border:0;border-radius:50%;background:transparent;cursor:pointer;
+  display:grid;place-items:center;padding:0;
+  animation:applePulse 1.35s ease-in-out infinite;
+}
+.apple-again:active{transform:scale(.94)}
+.apple-ring{width:22vmin;height:22vmin;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.76);box-shadow:inset 0 0 1.8vmin rgba(255,175,76,.38),0 .8vmin 2.6vmin rgba(150,39,55,.16)}
+.apple-icon{font-size:14.2vmin;line-height:1;filter:drop-shadow(0 .9vmin .65vmin rgba(112,25,32,.24))}
+.sound-mark{position:absolute;top:50%;transform:translateY(-50%);font-size:4.4vmin;font-weight:900;color:#ffd765;text-shadow:0 0 .45vmin #fff,0 0 1.2vmin #ff9a4c;letter-spacing:-.65vmin;opacity:.95;animation:soundPulse 1.15s ease-in-out infinite}
+.sound-left{left:-8.7vmin}.sound-right{right:-8.7vmin}
+@keyframes applePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.055)}}
+@keyframes soundPulse{0%,100%{opacity:.42;filter:blur(.02vmin);transform:translateY(-50%) scale(.88)}50%{opacity:1;filter:blur(0);transform:translateY(-50%) scale(1.08)}}

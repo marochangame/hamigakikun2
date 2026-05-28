@@ -12,6 +12,20 @@
   let running = false;
   let completed = false;
 
+
+  function speakAgainGuide() {
+    try {
+      if (!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance('もう一度するなら、リンゴを押してね');
+      u.lang = 'ja-JP';
+      u.rate = 0.92;
+      u.pitch = 1.18;
+      u.volume = 1;
+      window.speechSynthesis.speak(u);
+    } catch(e) {}
+  }
+
   function reset() {
     if (raf) cancelAnimationFrame(raf);
     raf = null;
@@ -22,6 +36,7 @@
     germs.forEach(g => g.classList.remove('gone'));
     sparkles.forEach(s => s.classList.remove('on'));
     try { song.pause(); song.currentTime = 0; } catch(e) {}
+    try { if ('speechSynthesis' in window) window.speechSynthesis.cancel(); } catch(e) {}
   }
 
   async function start() {
@@ -54,6 +69,7 @@
     germs.forEach(g => g.classList.add('gone'));
     sparkles.forEach(s => s.classList.add('on'));
     try { song.pause(); song.currentTime = 0; } catch(e) {}
+    setTimeout(speakAgainGuide, 450);
   }
 
   startBtn.addEventListener('click', start);
