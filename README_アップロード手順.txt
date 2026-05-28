@@ -1,18 +1,23 @@
-はみがきくん2 改善版 v12
+【v13 文字なし版】
 
-変更点：
-1. 画面上の文字を削除し、リンゴボタンのみ表示
-2. 開始前音声：「リンゴを押して歯磨き始めてね」
-3. 終了後音声：「もう一度歯磨きするならリンゴを押してね」
-4. 画像の画角を contain に変更し、歯が見切れにくい表示へ調整
-5. バイ菌が90秒に合わせて順番に消える演出を維持
+今回の修正点
+・ベース画像を「文字なし画像」に差し替え
+・画面内のスタート文字、タイマー文字、ゲージ、吹き出し文字は表示しない
+・リンゴボタンだけで開始／もう一度を操作
+・開始前音声「リンゴを押して歯磨き始めてね」
+・終了後音声「もう一度歯磨きするならリンゴを押してね」
+・歯磨き中にバイ菌を順番に隠して、消えていくように見せる
 
-GitHubの hamigakikun2 に以下3ファイルを上書きしてください。
-- index.html
-- style-v11.css
-- app-v11.js
+GitHubで上書きするファイル
+1. index.html
+2. style-v11.css
+3. app-v11.js
+4. kawaii_ui.jpg
 
-画像 kawaii_ui.jpg と音源 hamigaki_song.m4a は既存ファイルをそのまま使います。
-アップロード後、Commit changes を押してください。
-確認URL例：
-https://marochangame.github.io/hamigakikun2/index.html?v=12
+重要
+・今回は kawaii_ui.jpg も必ず上書きしてください。
+・これを上書きしないと、前の文字入り画像が残ります。
+・BACKUP_before_v13_v12_improved.zip は保管用です。GitHubへ上書きしなくてOKです。
+
+確認URL
+https://marochangame.github.io/hamigakikun2/index.html?v=13
