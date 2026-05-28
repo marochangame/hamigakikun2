@@ -8,16 +8,14 @@
   <meta name="theme-color" content="#8feee4" />
   <title>はみがき90びょう</title>
   <link rel="manifest" href="manifest.webmanifest" />
-  <link rel="stylesheet" href="style-v11.css?v=11" />
+  <link rel="stylesheet" href="style-v11.css?v=12" />
 </head>
 <body>
   <main class="app" id="app">
     <img src="kawaii_ui.jpg" class="base-art" alt="はみがき90びょう" draggable="false" />
 
-    <!-- 吹き出しの文字だけ隠すためのやわらかい白パッチ -->
     <div class="speech-clean" aria-hidden="true"></div>
 
-    <!-- 背景に焼き込まれているバイ菌を、目立たない口色パッチで順番に消す -->
     <div class="germ-clean g1"><i>✦</i><b>✨</b></div>
     <div class="germ-clean g2"><i>✦</i><b>✨</b></div>
     <div class="germ-clean g3"><i>✦</i><b>✨</b></div>
@@ -32,20 +30,15 @@
       <span class="sp s10">✦</span><span class="sp s11">✨</span><span class="sp s12">✧</span>
     </div>
 
-    <button class="start-btn" id="startBtn" type="button" aria-label="スタート">スタート</button>
+    <button class="apple-btn start-btn" id="startBtn" type="button" aria-label="リンゴを押して歯磨き始めてね">🍎</button>
 
     <div class="finish" id="finish" aria-live="polite">
-      <div class="finish-card">
-        <div class="finish-star">⭐</div>
-        <div class="finish-main">はみがき できた！</div>
-        <div class="finish-sub">もう一回する？</div>
-        <button class="again-visible" id="againVisible" type="button">もういっかい</button>
-      </div>
+      <button class="apple-btn again-visible" id="againVisible" type="button" aria-label="もう一度歯磨きするならリンゴを押してね">🍎</button>
     </div>
 
     <audio id="song" preload="auto" src="hamigaki_song.m4a"></audio>
   </main>
   <div class="rotate">よこ向きにしてね</div>
-  <script src="app-v11.js?v=11"></script>
+  <script src="app-v11.js?v=12"></script>
 </body>
 </html>
