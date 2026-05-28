@@ -5,14 +5,13 @@
   const song = document.getElementById('song');
   const startBtn = document.getElementById('startBtn');
   const againVisible = document.getElementById('againVisible');
-  const rotateHint = document.getElementById('rotateHint');
   const germs = [...document.querySelectorAll('.germ-clean')];
   const sparkles = [...document.querySelectorAll('.sp')];
   let raf = null;
   let startAt = 0;
   let running = false;
   let completed = false;
-  let lastRotateVoiceAt = 0;
+  let lastGuideAt = 0;
 
   function speak(text) {
     try {
@@ -21,7 +20,8 @@
       const u = new SpeechSynthesisUtterance(text);
       u.lang = 'ja-JP';
       u.rate = 0.92;
-      u.pitch = 1.15;
+      u.pitch = 1.08;
+      u.volume = 1;
       window.speechSynthesis.speak(u);
     } catch(e) {}
   }
@@ -30,11 +30,11 @@
     return window.matchMedia && window.matchMedia('(orientation: portrait)').matches;
   }
 
-  function announceRotateStart() {
+  function speakGuideIfPortrait(force=false) {
     if (!isPortrait()) return;
     const now = Date.now();
-    if (now - lastRotateVoiceAt < 4500) return;
-    lastRotateVoiceAt = now;
+    if (!force && now - lastGuideAt < 6000) return;
+    lastGuideAt = now;
     speak('歯みがきスタートはリンゴを押してね');
   }
 
@@ -73,7 +73,6 @@
   }
 
   function finish() {
-    if (completed) return;
     completed = true;
     running = false;
     app.classList.remove('running');
@@ -84,19 +83,23 @@
     speak('もう一度歯みがきするならリンゴを押してね');
   }
 
+  function restartFromFinish() {
+    reset();
+    start();
+  }
+
   startBtn.addEventListener('click', start);
   startBtn.addEventListener('touchend', (e)=>{ e.preventDefault(); start(); }, {passive:false});
-  againVisible.addEventListener('click', start);
-  againVisible.addEventListener('touchend', (e)=>{ e.preventDefault(); start(); }, {passive:false});
+  againVisible.addEventListener('click', restartFromFinish);
+  againVisible.addEventListener('touchend', (e)=>{ e.preventDefault(); restartFromFinish(); }, {passive:false});
   song.addEventListener('ended', finish);
-  window.addEventListener('pagehide', () => { try { song.pause(); window.speechSynthesis.cancel(); } catch(e){} });
-  window.addEventListener('orientationchange', () => setTimeout(announceRotateStart, 350));
-  window.addEventListener('resize', () => setTimeout(announceRotateStart, 250));
-  document.addEventListener('visibilitychange', () => { if (!document.hidden) setTimeout(announceRotateStart, 300); });
-  if (rotateHint) {
-    rotateHint.addEventListener('click', announceRotateStart);
-    rotateHint.addEventListener('touchend', (e)=>{ e.preventDefault(); announceRotateStart(); }, {passive:false});
-  }
-  setTimeout(announceRotateStart, 650);
+  window.addEventListener('orientationchange', () => setTimeout(()=>speakGuideIfPortrait(true), 350));
+  window.addEventListener('resize', () => speakGuideIfPortrait(false));
+  window.addEventListener('pageshow', () => setTimeout(()=>speakGuideIfPortrait(false), 500));
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) speakGuideIfPortrait(false); });
+  document.getElementById('rotateGuide')?.addEventListener('click', () => speakGuideIfPortrait(true));
+  document.getElementById('rotateGuide')?.addEventListener('touchend', (e) => { e.preventDefault(); speakGuideIfPortrait(true); }, {passive:false});
+  window.addEventListener('pagehide', () => { try { song.pause(); window.speechSynthesis?.cancel(); } catch(e){} });
   reset();
+  setTimeout(()=>speakGuideIfPortrait(false), 700);
 })();
