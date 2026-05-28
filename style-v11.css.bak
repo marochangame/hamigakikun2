@@ -5,8 +5,8 @@ body{touch-action:manipulation}
 .base-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;user-select:none;-webkit-user-select:none}
 /* 吹き出し内の文字を消す。大きなUIは追加しない */
 .speech-clean{position:absolute;left:76.5%;top:36.5%;width:21.5%;height:22%;border-radius:48% 52% 46% 54%/52% 48% 52% 48%;background:radial-gradient(ellipse at 50% 45%,rgba(255,255,255,.96) 0 58%,rgba(255,255,255,.78) 66%,rgba(255,255,255,0) 82%);filter:blur(.15vmin);pointer-events:none}
-/* 小さめスタート。口の中に入れず、画面下に固定 */
-.start-btn{position:absolute;left:50%;bottom:calc(2.2% + env(safe-area-inset-bottom));transform:translateX(-50%);padding:1.15vmin 4.2vmin;border:0;border-radius:999px;background:rgba(255,231,103,.92);color:#123b56;font-size:3.2vmin;font-weight:900;letter-spacing:.03em;box-shadow:0 .7vmin 0 rgba(172,143,52,.24),0 0 0 .45vmin rgba(255,255,255,.72);cursor:pointer;animation:startPulse 1.55s ease-in-out infinite;z-index:8}
+/* 小さめスタート。絵を邪魔しない */
+.start-btn{position:absolute;left:50%;bottom:3.6%;transform:translateX(-50%);padding:1.15vmin 4.2vmin;border:0;border-radius:999px;background:rgba(255,231,103,.92);color:#123b56;font-size:3.2vmin;font-weight:900;letter-spacing:.03em;box-shadow:0 .7vmin 0 rgba(172,143,52,.24),0 0 0 .45vmin rgba(255,255,255,.72);cursor:pointer;animation:startPulse 1.55s ease-in-out infinite;z-index:8}
 .running .start-btn,.done .start-btn{display:none}
 @keyframes startPulse{0%,100%{transform:translateX(-50%) scale(1)}50%{transform:translateX(-50%) scale(1.045)}}
 /* バイ菌の上に、口の色になじむパッチをふわっと重ねて本当に見えなくする */
@@ -16,18 +16,8 @@ body{touch-action:manipulation}
 .germ-clean.gone{animation:coverIn .55s ease-out forwards}
 .germ-clean.gone i,.germ-clean.gone b{animation:tinyStar .9s ease-out .18s forwards}
 .g1{left:20%;top:42%;width:12vmin;height:12vmin}.g2{left:36.8%;top:34.5%;width:11vmin;height:11vmin}.g3{left:50.5%;top:45.3%;width:10.5vmin;height:10.5vmin}.g4{left:62.4%;top:37.6%;width:11.5vmin;height:11.5vmin}.g5{left:70.6%;top:42.7%;width:9.5vmin;height:9.5vmin}.g6{left:34%;top:57%;width:10.8vmin;height:10.8vmin}
-@keyframes coverIn{0%{opacity:0;transform:translate(-50%,-50%) scale(.22)}48%{opacity:.92;transform:translate(-50%,-50%) scale(1.08)}100%{opacity:.86;transform:translate(-50%,-50%) scale(1)}}
+@keyframes coverIn{0%{opacity:0;transform:translate(-50%,-50%) scale(.22)}48%{opacity:.92;transform:translate(-50%,-50%) scale(1.08)}100%{opacity:.78;transform:translate(-50%,-50%) scale(1)}}
 @keyframes tinyStar{0%{opacity:0;transform:translate(-50%,-50%) scale(.3) rotate(-10deg)}60%{opacity:1;transform:translate(-50%,-62%) scale(1.15) rotate(8deg)}100%{opacity:.65;transform:translate(-50%,-55%) scale(.75) rotate(0)}}
-
-/* バイ菌が風船みたいに小さくパチンとはじける演出。大きな物体は出さない */
-.germ-clean::before,.germ-clean::after{content:"";position:absolute;left:50%;top:50%;width:72%;height:72%;border-radius:50%;transform:translate(-50%,-50%) scale(.15);opacity:0;pointer-events:none}
-.germ-clean::before{border:.38vmin solid rgba(255,255,255,.95);box-shadow:0 0 1.2vmin rgba(255,249,168,.9),0 0 2vmin rgba(255,120,188,.55)}
-.germ-clean::after{background:radial-gradient(circle,rgba(255,255,255,.92) 0 10%,rgba(255,245,120,.65) 11% 18%,rgba(255,255,255,0) 42%)}
-.germ-clean.gone::before{animation:popRing .42s cubic-bezier(.16,.85,.28,1) forwards}
-.germ-clean.gone::after{animation:popFlash .28s ease-out forwards}
-@keyframes popRing{0%{opacity:0;transform:translate(-50%,-50%) scale(.12)}28%{opacity:1}100%{opacity:0;transform:translate(-50%,-50%) scale(1.45)}}
-@keyframes popFlash{0%{opacity:0;transform:translate(-50%,-50%) scale(.1)}38%{opacity:.95;transform:translate(-50%,-50%) scale(.95)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.25)}}
-
 /* 追加キラキラは小さいものだけ。大きな発光物体は禁止 */
 .mini-sparkles{position:absolute;inset:0;pointer-events:none;z-index:4}
 .sp{position:absolute;opacity:0;color:#fff9a8;text-shadow:0 0 .45vmin #fff,0 0 1.1vmin #ff8ac8,0 0 1.4vmin #95fff3;font-size:2.4vmin;font-weight:900;transform:scale(.35)}
