@@ -1,66 +1,32 @@
-(() => {
-  'use strict';
-  const TOTAL = 90;
-  const app = document.getElementById('app');
-  const song = document.getElementById('song');
-  const startBtn = document.getElementById('startBtn');
-  const againVisible = document.getElementById('againVisible');
-  const germs = [...document.querySelectorAll('.germ-clean')];
-  const sparkles = [...document.querySelectorAll('.sp')];
-  let raf = null;
-  let startAt = 0;
-  let running = false;
-  let completed = false;
+const germs = document.getElementById('germs');
+const finish = document.getElementById('finish');
+const startBtn = document.getElementById('startBtn');
 
-  function reset() {
-    if (raf) cancelAnimationFrame(raf);
-    raf = null;
-    running = false;
-    completed = false;
-    startAt = 0;
-    app.classList.remove('running','done');
-    germs.forEach(g => g.classList.remove('gone'));
-    sparkles.forEach(s => s.classList.remove('on'));
-    try { song.pause(); song.currentTime = 0; } catch(e) {}
+let total = 10;
+let cleared = 0;
+
+function makeGerm(){
+  const g = document.createElement('div');
+  g.className = 'germ';
+  g.innerHTML = '🦠';
+  g.style.left = Math.random()*75 + '%';
+  g.style.top = Math.random()*70 + '%';
+
+  g.onclick = ()=>{
+    g.style.transform='scale(1.8)';
+    g.style.opacity='0';
+    setTimeout(()=>g.remove(),150);
+    cleared++;
+    if(cleared >= total){
+      finish.style.display='flex';
+    }
+  };
+  germs.appendChild(g);
+}
+
+startBtn.onclick = ()=>{
+  startBtn.style.display='none';
+  for(let i=0;i<total;i++){
+    makeGerm();
   }
-
-  async function start() {
-    if (running) return;
-    reset();
-    running = true;
-    app.classList.add('running');
-    startAt = performance.now();
-    try { song.currentTime = 0; await song.play(); } catch(e) {}
-    raf = requestAnimationFrame(tick);
-  }
-
-  function tick(now) {
-    if (!running || completed) return;
-    const elapsed = Math.min(TOTAL, (now - startAt) / 1000);
-    const progress = elapsed / TOTAL;
-    const activeGerms = Math.min(germs.length, Math.floor(progress * (germs.length + 0.85)));
-    germs.forEach((g, i) => { if (i < activeGerms) g.classList.add('gone'); });
-    const activeSparkles = Math.min(sparkles.length, Math.floor(progress * (sparkles.length + 0.7)));
-    sparkles.forEach((s, i) => { if (i < activeSparkles) s.classList.add('on'); });
-    if (elapsed >= TOTAL || song.ended) return finish();
-    raf = requestAnimationFrame(tick);
-  }
-
-  function finish() {
-    completed = true;
-    running = false;
-    app.classList.remove('running');
-    app.classList.add('done');
-    germs.forEach(g => g.classList.add('gone'));
-    sparkles.forEach(s => s.classList.add('on'));
-    try { song.pause(); song.currentTime = 0; } catch(e) {}
-  }
-
-  startBtn.addEventListener('click', start);
-  startBtn.addEventListener('touchend', (e)=>{ e.preventDefault(); start(); }, {passive:false});
-  againVisible.addEventListener('click', reset);
-  againVisible.addEventListener('touchend', (e)=>{ e.preventDefault(); reset(); }, {passive:false});
-  song.addEventListener('ended', finish);
-  window.addEventListener('pagehide', () => { try { song.pause(); } catch(e){} });
-  reset();
-})();
+};
