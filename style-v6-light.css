@@ -1,0 +1,30 @@
+:root{
+  --ink:#113a59;
+  --pink:#ff5e98;
+  --yellow:#ffe762;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#8feee4;font-family:-apple-system,BlinkMacSystemFont,"Hiragino Maru Gothic ProN","Hiragino Sans","Yu Gothic",sans-serif;color:var(--ink);touch-action:manipulation;user-select:none}
+.app{position:fixed;inset:0;overflow:hidden;background:linear-gradient(135deg,#75e8ef,#f9c2e4);}
+.base-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 53%;filter:saturate(1.07) brightness(1.02);transform:scale(1.02);}
+/* 動かす要素だけを少し足す。文字UIは最小限。 */
+.moving-brush{position:absolute;left:50%;top:50%;font-size:clamp(42px,6vw,92px);transform:translate(-50%,-50%) rotate(-18deg);filter:drop-shadow(0 10px 12px rgba(0,0,0,.18));opacity:0;z-index:5;transition:opacity .25s ease}
+.app.running .moving-brush{opacity:1;animation:bristle .28s ease-in-out infinite alternate}
+@keyframes bristle{from{filter:drop-shadow(0 10px 12px rgba(0,0,0,.16));}to{filter:drop-shadow(0 7px 10px rgba(0,0,0,.2));}}
+.germ,.fairy{position:absolute;display:inline-block;z-index:4;will-change:transform,opacity;filter:drop-shadow(0 8px 10px rgba(0,0,0,.16));}
+.germ{font-size:clamp(30px,4.2vw,66px);opacity:0;transform:scale(.75)}
+.app.running .germ{opacity:1;animation:germWiggle .55s ease-in-out infinite alternate}
+.germ.gone{animation:germPop .55s ease forwards!important;}
+@keyframes germWiggle{from{transform:scale(1) rotate(-6deg)}to{transform:scale(1.08) rotate(7deg)}}
+@keyframes germPop{0%{opacity:1;transform:scale(1.05) rotate(0)}55%{opacity:1;transform:scale(.45) rotate(18deg)}100%{opacity:0;transform:scale(0) rotate(40deg)}}
+.g1{left:31%;top:31%}.g2{left:45%;top:40%}.g3{left:58%;top:33%}.g4{left:67%;top:43%}.g5{left:37%;top:52%}.g6{left:52%;top:58%}.g7{left:72%;top:56%}
+.fairy{font-size:clamp(34px,5vw,78px);opacity:0;transform:scale(.1) translateY(20px);transition:opacity .5s ease,transform .5s cubic-bezier(.2,1.5,.35,1)}
+.fairy.show{opacity:1;transform:scale(1) translateY(0)}
+.f1{left:4%;top:9%}.f2{right:5%;top:9%}.f3{left:6%;bottom:9%}.f4{right:6%;bottom:9%}
+.sparkles{position:absolute;inset:0;pointer-events:none;z-index:6}.sparkle{position:absolute;font-size:clamp(20px,3.5vw,52px);animation:spark .75s ease-out forwards;filter:drop-shadow(0 3px 6px rgba(255,206,61,.45))}@keyframes spark{0%{opacity:0;transform:translate(-50%,-50%) scale(.2) rotate(0)}35%{opacity:1}100%{opacity:0;transform:translate(-50%,-50%) scale(1.4) rotate(30deg)}}
+.start-btn{position:absolute;z-index:10;left:50%;bottom:4.8%;transform:translateX(-50%);min-width:min(48vw,560px);height:min(15vh,118px);padding:0 48px;border:8px solid #fff;border-radius:999px;background:linear-gradient(#fff083,#ffd440);box-shadow:0 12px 0 rgba(139,105,28,.25),0 18px 30px rgba(0,0,0,.17);font-size:clamp(38px,6.2vw,92px);font-weight:900;color:#ff4f91;text-shadow:0 2px 0 #fff;letter-spacing:.04em;}
+.start-btn:active{transform:translateX(-50%) translateY(8px);box-shadow:0 5px 0 rgba(139,105,28,.25),0 9px 16px rgba(0,0,0,.13)}
+.app.running .start-btn,.app.done-state .start-btn{display:none}
+.mini-btn{position:absolute;z-index:10;bottom:4.5%;border:5px solid #fff;border-radius:999px;background:rgba(255,255,255,.72);color:#17425e;font-weight:900;box-shadow:0 8px 18px rgba(0,0,0,.15);font-size:clamp(18px,2.4vw,34px);padding:.55em 1em;opacity:0;pointer-events:none}.app.running .mini-btn{opacity:.86;pointer-events:auto}.pause-btn{left:4%}.reset-btn{right:4%;min-width:70px}
+.done{position:absolute;inset:0;z-index:20;display:grid;place-items:center;background:rgba(255,248,226,.25);backdrop-filter:blur(1px);opacity:0;pointer-events:none;transition:opacity .25s ease}.done.show{opacity:1;pointer-events:auto}.done-card{width:min(70vw,840px);padding:min(6vh,58px);border-radius:42px;background:rgba(255,255,255,.92);text-align:center;box-shadow:0 20px 45px rgba(0,0,0,.18);border:6px solid rgba(255,255,255,.9)}.done-star{font-size:clamp(60px,9vw,120px)}.done h1{margin:.1em 0;color:#ff4f91;font-size:clamp(48px,7.5vw,104px);line-height:1.05}.done p{margin:.3em 0 .7em;font-size:clamp(24px,3.5vw,48px);font-weight:900}.done button{border:0;border-radius:999px;background:linear-gradient(#fff083,#ffd440);color:#17425e;font-weight:900;font-size:clamp(24px,3.6vw,46px);padding:.55em 1.4em;box-shadow:0 8px 0 rgba(139,105,28,.23)}
+.rotate{display:none;position:fixed;inset:0;place-items:center;background:linear-gradient(135deg,#8feee4,#ffd5e8);z-index:99;font-weight:900;font-size:9vw;color:#17425e;text-align:center}@media (orientation:portrait){.app{display:none}.rotate{display:grid}}

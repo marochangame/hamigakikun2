@@ -1,78 +1,103 @@
 (() => {
-  const DURATION = 90;
-  const startBtn = document.getElementById('startBtn');
-  const againBtn = document.getElementById('againVisible');
-  const finish = document.getElementById('finish');
-  const timer = document.getElementById('timer');
-  const barFill = document.getElementById('barFill');
-  const hud = document.getElementById('hud');
-  const sparkleLayer = document.getElementById('sparkleLayer');
-  const cleans = Array.from(document.querySelectorAll('.germ-clean'));
-  let intervalId = null;
-  let remain = DURATION;
-  let startedAt = 0;
+  'use strict';
+  const TOTAL = 90;
+  const segments = [
+    { from:0,  zone:'upperOutside', name:'うえの は',   hint:'そとがわを シャカシャカ' },
+    { from:15, zone:'lowerOutside', name:'したの は',   hint:'そとがわを シャカシャカ' },
+    { from:30, zone:'front',        name:'まえば',      hint:'にこっと まえばを みがこう' },
+    { from:45, zone:'upperInside',  name:'うえの うら', hint:'うらがわも わすれずに' },
+    { from:60, zone:'lowerInside',  name:'したの うら', hint:'やさしく こちょこちょ' },
+    { from:75, zone:'finish',       name:'しあげ',      hint:'さいごは ぴかぴかにしよう' }
+  ];
+  function $(id){ return document.getElementById(id); }
+  const el = {
+    stage:$('stage'), done:$('done'), song:$('song'), start:$('startBtn'), pause:$('pauseBtn'), reset:$('resetBtn'), again:$('againBtn'),
+    timer:$('timer'), progress:$('progress'), areaName:$('areaName'), areaHint:$('areaHint'), message:$('message'), brush:$('brush'), sparkle:$('sparkle'),
+    zones:[...document.querySelectorAll('.zone')]
+  };
+  let timerId = null;
+  let running = false;
+  let finished = false;
+  let lastIdx = -1;
 
-  function resetGame(){
-    clearInterval(intervalId);
-    remain = DURATION;
-    startedAt = 0;
-    timer.textContent = DURATION;
-    barFill.style.width = '0%';
-    cleans.forEach(el => el.classList.remove('is-clean'));
-    finish.classList.remove('is-show');
-    hud.classList.remove('is-show');
-    startBtn.classList.remove('is-hidden');
+  function fmt(sec){ const s=Math.max(0,Math.ceil(sec)); return `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`; }
+  function current(){ return Math.min(el.song.currentTime || 0, TOTAL); }
+  function idxAt(t){ return Math.min(segments.length-1, Math.floor(t/15)); }
+  function setScreen(screen){
+    if(screen === 'done') { el.stage.classList.add('hide'); el.done.classList.add('show'); }
+    else { el.done.classList.remove('show'); el.stage.classList.remove('hide'); }
   }
-
-  function popSparkle(x, y){
-    const s = document.createElement('span');
-    s.className = 'sparkle';
-    s.textContent = Math.random() > .45 ? '✨' : '✦';
-    s.style.left = x + '%';
-    s.style.top = y + '%';
-    s.style.fontSize = (20 + Math.random()*24) + 'px';
-    sparkleLayer.appendChild(s);
-    setTimeout(() => s.remove(), 900);
+  function sparkle(){ el.sparkle.classList.remove('pop'); void el.sparkle.offsetWidth; el.sparkle.classList.add('pop'); }
+  function paint(){
+    const t = current();
+    const pct = Math.min(100, (t/TOTAL)*100);
+    el.timer.textContent = fmt(TOTAL - t);
+    el.progress.style.width = pct + '%';
+    const idx = idxAt(t);
+    const seg = segments[idx];
+    if(idx !== lastIdx){
+      lastIdx = idx;
+      el.areaName.textContent = seg.name;
+      el.areaHint.textContent = seg.hint;
+      el.message.textContent = idx === 0 ? 'いっしょに みがこう！' : 'つぎの ばしょ！';
+      sparkle();
+      el.zones.forEach(z => {
+        const zidx = segments.findIndex(s => s.zone === z.dataset.zone);
+        z.classList.toggle('active', z.dataset.zone === seg.zone);
+        z.classList.toggle('done-zone', zidx >= 0 && zidx < idx);
+      });
+      setTimeout(() => { if(running && !finished) el.message.textContent = 'シャカシャカ♪'; }, 1000);
+    }
   }
-
-  function finishGame(){
-    clearInterval(intervalId);
-    cleans.forEach(el => el.classList.add('is-clean'));
-    timer.textContent = '0';
-    barFill.style.width = '100%';
-    for(let i=0;i<18;i++) setTimeout(()=>popSparkle(20+Math.random()*60,18+Math.random()*60), i*90);
-    setTimeout(()=>finish.classList.add('is-show'), 900);
-  }
-
   function tick(){
-    const elapsed = Math.floor((Date.now() - startedAt) / 1000);
-    remain = Math.max(0, DURATION - elapsed);
-    timer.textContent = remain;
-    const done = Math.min(1, elapsed / DURATION);
-    barFill.style.width = (done * 100) + '%';
-
-    const cleanCount = Math.min(cleans.length, Math.floor(done * cleans.length + 0.0001));
-    cleans.forEach((el, i) => {
-      if(i < cleanCount && !el.classList.contains('is-clean')){
-        el.classList.add('is-clean');
-        const r = el.getBoundingClientRect();
-        popSparkle(((r.left + r.width/2) / innerWidth) * 100, ((r.top + r.height/2) / innerHeight) * 100);
-      }
-    });
-
-    if(remain <= 0) finishGame();
+    paint();
+    if(current() >= TOTAL - 0.05 && !finished) finish();
   }
-
-  function startGame(){
-    resetGame();
-    startBtn.classList.add('is-hidden');
-    hud.classList.add('is-show');
-    startedAt = Date.now();
-    tick();
-    intervalId = setInterval(tick, 250);
+  function clearTick(){ if(timerId){ clearInterval(timerId); timerId = null; } }
+  async function start(){
+    if(finished) reset();
+    setScreen('stage');
+    try{
+      await el.song.play();
+      running = true; finished = false;
+      el.start.textContent = 'さいせい中'; el.start.disabled = true; el.pause.disabled = false;
+      el.brush.classList.add('cleaning'); el.message.textContent = 'シャカシャカ♪';
+      clearTick(); timerId = setInterval(tick, 120); tick();
+    }catch(e){
+      el.message.textContent = 'もういちど スタートをおしてね';
+      console.error(e);
+    }
   }
-
-  startBtn.addEventListener('click', startGame);
-  againBtn.addEventListener('click', startGame);
-  resetGame();
+  function pause(){
+    el.song.pause(); running = false; clearTick();
+    el.start.textContent = 'つづき'; el.start.disabled = false; el.pause.disabled = true;
+    el.brush.classList.remove('cleaning'); el.message.textContent = 'ちょっと おやすみ';
+  }
+  function reset(){
+    clearTick();
+    running = false; finished = false; lastIdx = -1;
+    el.song.pause();
+    try { el.song.currentTime = 0; } catch(e) {}
+    setScreen('stage');
+    el.start.textContent = 'スタート'; el.start.disabled = false; el.pause.disabled = true;
+    el.brush.classList.remove('cleaning');
+    el.timer.textContent = '1:30'; el.progress.style.width = '0%';
+    el.areaName.textContent = 'じゅんび'; el.areaHint.textContent = 'よこ向きで使ってね'; el.message.textContent = 'スタートをおしてね';
+    el.zones.forEach(z => z.classList.remove('active','done-zone'));
+  }
+  function finish(){
+    clearTick(); running = false; finished = true;
+    el.song.pause(); el.brush.classList.remove('cleaning');
+    el.timer.textContent = '0:00'; el.progress.style.width = '100%';
+    el.zones.forEach(z => z.classList.add('done-zone'));
+    setScreen('done');
+  }
+  document.addEventListener('DOMContentLoaded', reset, { once:true });
+  window.addEventListener('pageshow', reset);
+  el.start.addEventListener('click', start);
+  el.pause.addEventListener('click', pause);
+  el.reset.addEventListener('click', reset);
+  el.again.addEventListener('click', reset);
+  el.song.addEventListener('ended', finish);
+  reset();
 })();
