@@ -1,41 +1,29 @@
 <!doctype html>
 <html lang="ja">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="theme-color" content="#8feee4" />
-  <title>はみがき90びょう</title>
-  <link rel="manifest" href="manifest.webmanifest" />
-  <link rel="apple-touch-icon" href="icon-192.png" />
-  <link rel="stylesheet" href="style-v13.css?v=13" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>はみがきくん2</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main class="app" id="app">
-    <img src="kawaii_ui.jpg" class="base-art" alt="はみがき90びょう" draggable="false" />
-
-    <div class="germ-clean g1"><span>✨</span></div>
-    <div class="germ-clean g2"><span>✦</span></div>
-    <div class="germ-clean g3"><span>✨</span></div>
-    <div class="germ-clean g4"><span>✦</span></div>
-    <div class="germ-clean g5"><span>✨</span></div>
-    <div class="germ-clean g6"><span>✦</span></div>
-
-    <div class="sparkle-layer" id="sparkleLayer" aria-hidden="true"></div>
-
-    <button class="start-btn" id="startBtn" type="button" aria-label="スタート">スタート</button>
-
-    <div class="finish" id="finish" aria-live="polite">
-      <div class="finish-card">
-        <div class="finish-star">⭐</div>
-        <div class="finish-main">はみがき できた！</div>
-        <div class="finish-sub">もう一回する？</div>
-        <button class="again-visible" id="againVisible" type="button">もういっかい</button>
+  <main id="app" class="app" aria-label="はみがきゲーム">
+    <div class="spark s1">✦</div><div class="spark s2">✨</div><div class="spark s3">✦</div><div class="spark s4">✨</div>
+    <section class="stage" id="stage">
+      <div class="fairy fairy-pink">★</div><div class="fairy fairy-blue">★</div><div class="fairy fairy-green">★</div><div class="fairy fairy-yellow">★</div>
+      <div class="mouth" id="mouth">
+        <div class="gum top"></div><div class="gum bottom"></div><div class="throat"></div><div class="tongue"></div>
+        <div class="teeth top-teeth" id="topTeeth"></div>
+        <div class="teeth bottom-teeth" id="bottomTeeth"></div>
+        <div class="germs" id="germs"></div>
+        <div class="brush" id="brush"><div class="foam"></div><div class="head"><i></i><i></i><i></i><i></i><i></i></div><div class="handle"></div></div>
+        <div class="bubbles" id="bubbles"></div>
       </div>
-    </div>
+    </section>
+    <button class="start" id="startBtn" type="button">スタート</button>
+    <section class="finish" id="finish" aria-hidden="true"><div class="star">⭐</div><h1>はみがき できた！</h1><p>もう一回する？</p><button id="againBtn" type="button">もういっかい</button></section>
+    <div class="rotate">よこ向きにしてね</div>
   </main>
-  <div class="rotate">よこ向きにしてね</div>
-  <script src="app-v13.js?v=13"></script>
+<script src="app.js"></script>
 </body>
 </html>
