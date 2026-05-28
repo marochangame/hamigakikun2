@@ -1,18 +1,51 @@
 <!doctype html>
 <html lang="ja">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>はみがきくん2</title>
-<link rel="stylesheet" href="style-v11.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="theme-color" content="#8feee4" />
+  <title>はみがき90びょう</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="stylesheet" href="style-v11.css?v=11" />
 </head>
 <body>
-<div class="app">
-  <img class="mouth" src="https://dummyimage.com/900x1600/f7c6d9/ffffff.png&text=%E3%81%AF%E3%81%BF%E3%81%8C%E3%81%8D%E3%81%8F%E3%82%93" alt="mouth">
-  <button id="startBtn">スタート</button>
-  <div id="germs"></div>
-  <div id="finish">はみがきできた！<br><button onclick="location.reload()">もういっかい</button></div>
-</div>
-<script src="app-v11.js"></script>
+  <main class="app" id="app">
+    <img src="kawaii_ui.jpg" class="base-art" alt="はみがき90びょう" draggable="false" />
+
+    <!-- 吹き出しの文字だけ隠すためのやわらかい白パッチ -->
+    <div class="speech-clean" aria-hidden="true"></div>
+
+    <!-- 背景に焼き込まれているバイ菌を、目立たない口色パッチで順番に消す -->
+    <div class="germ-clean g1"><i>✦</i><b>✨</b></div>
+    <div class="germ-clean g2"><i>✦</i><b>✨</b></div>
+    <div class="germ-clean g3"><i>✦</i><b>✨</b></div>
+    <div class="germ-clean g4"><i>✦</i><b>✨</b></div>
+    <div class="germ-clean g5"><i>✦</i><b>✨</b></div>
+    <div class="germ-clean g6"><i>✦</i><b>✨</b></div>
+
+    <div class="mini-sparkles" id="sparkleLayer" aria-hidden="true">
+      <span class="sp s1">✦</span><span class="sp s2">✨</span><span class="sp s3">✧</span>
+      <span class="sp s4">✦</span><span class="sp s5">✨</span><span class="sp s6">✧</span>
+      <span class="sp s7">✦</span><span class="sp s8">✨</span><span class="sp s9">✧</span>
+      <span class="sp s10">✦</span><span class="sp s11">✨</span><span class="sp s12">✧</span>
+    </div>
+
+    <button class="start-btn" id="startBtn" type="button" aria-label="スタート">スタート</button>
+
+    <div class="finish" id="finish" aria-live="polite">
+      <div class="finish-card">
+        <div class="finish-star">⭐</div>
+        <div class="finish-main">はみがき できた！</div>
+        <div class="finish-sub">もう一回する？</div>
+        <button class="again-visible" id="againVisible" type="button">もういっかい</button>
+      </div>
+    </div>
+
+    <audio id="song" preload="auto" src="hamigaki_song.m4a"></audio>
+  </main>
+  <div class="rotate">よこ向きにしてね</div>
+  <script src="app-v11.js?v=11"></script>
 </body>
 </html>
