@@ -1,22 +1,20 @@
-【hamigakikun2 v15】
+【hamigakikun2 v16】
 
-今回上書きするファイル：
-- index.html
-- style-v11.css
-- app-v11.js
-- kawaii_ui.png
-- hamigaki_song.m4a
-- manifest.webmanifest
+GitHub の hamigakikun2 に以下6ファイルを上書きしてください。
+
+1. index.html
+2. style-v11.css
+3. app-v11.js
+4. kawaii_ui.png
+5. hamigaki_song.m4a
+6. manifest.webmanifest
 
 確認URL：
-https://marochangame.github.io/hamigakikun2/index.html?v=15
+https://marochangame.github.io/hamigakikun2/index.html?v=16
 
 変更内容：
-- 採用画像に差し替え
-- 文字UIなし
-- 右下リンゴボタン
-- 口の中にボタンなし
-- 開始・終了の追加案内音声なし
-- 歌音声は tempo_corrected_voice(2).m4a 相当
-- 画角は画像全体が切れない中央固定ステージ方式
-- バイ菌が徐々に消える演出を維持
+・②のリンゴ「スタート／ストップ」デザインを採用
+・音声を tempo_corrected_voice(3).m4a に差し替え
+・リンゴ押下でスタート／ストップ（音声停止）／再開
+・文字UIの追加なし
+・バイ菌消滅アニメ維持
