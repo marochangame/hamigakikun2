@@ -8,37 +8,32 @@
   <meta name="theme-color" content="#8feee4" />
   <title>はみがき90びょう</title>
   <link rel="manifest" href="manifest.webmanifest" />
-  <link rel="stylesheet" href="style-v11.css?v=13" />
+  <link rel="stylesheet" href="style-v11.css?v=14" />
 </head>
 <body>
   <main class="app" id="app">
-    <img src="kawaii_ui.jpg?v=13" class="base-art" alt="" draggable="false" />
+    <img src="kawaii_ui.png?v=14" class="base-art" alt="" draggable="false" />
 
     <div class="clean-layer" aria-hidden="true">
-      <div class="germ-cover g1"><span>✦</span><b>✨</b></div>
-      <div class="germ-cover g2"><span>✦</span><b>✨</b></div>
-      <div class="germ-cover g3"><span>✦</span><b>✨</b></div>
-      <div class="germ-cover g4"><span>✦</span><b>✨</b></div>
-      <div class="germ-cover g5"><span>✦</span><b>✨</b></div>
-      <div class="germ-cover g6"><span>✦</span><b>✨</b></div>
+      <div class="germ-cover g1"><span>✦</span></div>
+      <div class="germ-cover g2"><span>✦</span></div>
+      <div class="germ-cover g3"><span>✦</span></div>
+      <div class="germ-cover g4"><span>✦</span></div>
+      <div class="germ-cover g5"><span>✦</span></div>
+      <div class="germ-cover g6"><span>✦</span></div>
     </div>
 
-    <div class="mini-sparkles" id="sparkleLayer" aria-hidden="true">
-      <span class="sp s1">✦</span><span class="sp s2">✨</span><span class="sp s3">✧</span>
-      <span class="sp s4">✦</span><span class="sp s5">✨</span><span class="sp s6">✧</span>
-      <span class="sp s7">✦</span><span class="sp s8">✨</span><span class="sp s9">✧</span>
-      <span class="sp s10">✦</span><span class="sp s11">✨</span><span class="sp s12">✧</span>
+    <div class="sparkle-layer" aria-hidden="true">
+      <i class="sp s1">✦</i><i class="sp s2">✨</i><i class="sp s3">✧</i>
+      <i class="sp s4">✦</i><i class="sp s5">✨</i><i class="sp s6">✧</i>
+      <i class="sp s7">✦</i><i class="sp s8">✨</i><i class="sp s9">✧</i>
+      <i class="sp s10">✦</i><i class="sp s11">✨</i><i class="sp s12">✧</i>
     </div>
 
-    <button class="apple-btn start-btn" id="startBtn" type="button" aria-label="リンゴを押して歯磨き始めてね">🍎</button>
-
-    <div class="finish" id="finish" aria-live="polite">
-      <button class="apple-btn again-visible" id="againVisible" type="button" aria-label="もう一度歯磨きするならリンゴを押してね">🍎</button>
-    </div>
-
-    <audio id="song" preload="auto" src="hamigaki_song.m4a"></audio>
+    <button class="apple-hit" id="appleBtn" type="button" aria-label="はみがきスタート"></button>
+    <audio id="song" preload="auto" src="hamigaki_song.m4a?v=14"></audio>
   </main>
   <div class="rotate">よこ向きにしてね</div>
-  <script src="app-v11.js?v=13"></script>
+  <script src="app-v11.js?v=14"></script>
 </body>
 </html>

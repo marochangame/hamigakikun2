@@ -3,46 +3,27 @@
   const TOTAL = 90;
   const app = document.getElementById('app');
   const song = document.getElementById('song');
-  const startBtn = document.getElementById('startBtn');
-  const againVisible = document.getElementById('againVisible');
-  const germs = [...document.querySelectorAll('.germ-clean')];
+  const appleBtn = document.getElementById('appleBtn');
+  const germs = [...document.querySelectorAll('.germ-cover')];
   const sparkles = [...document.querySelectorAll('.sp')];
   let raf = null;
   let startAt = 0;
   let running = false;
-  let completed = false;
 
-  function speak(text) {
-    try {
-      if (!('speechSynthesis' in window)) return;
-      window.speechSynthesis.cancel();
-      const u = new SpeechSynthesisUtterance(text);
-      u.lang = 'ja-JP';
-      u.rate = 0.86;
-      u.pitch = 1.55;
-      u.volume = 1;
-      window.speechSynthesis.speak(u);
-    } catch(e) {}
-  }
-
-  function reset() {
+  function resetVisual() {
     if (raf) cancelAnimationFrame(raf);
     raf = null;
     running = false;
-    completed = false;
     startAt = 0;
     app.classList.remove('running','done');
     germs.forEach(g => g.classList.remove('gone'));
     sparkles.forEach(s => s.classList.remove('on'));
     try { song.pause(); song.currentTime = 0; } catch(e) {}
-    setTimeout(() => speak('リンゴを押して歯磨き始めてね'), 150);
   }
 
   async function start() {
     if (running) return;
-    if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-    reset();
-    if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+    resetVisual();
     running = true;
     app.classList.add('running');
     startAt = performance.now();
@@ -51,7 +32,7 @@
   }
 
   function tick(now) {
-    if (!running || completed) return;
+    if (!running) return;
     const elapsed = Math.min(TOTAL, (now - startAt) / 1000);
     const progress = elapsed / TOTAL;
     const activeGerms = Math.min(germs.length, Math.floor(progress * (germs.length + 0.85)));
@@ -63,21 +44,18 @@
   }
 
   function finish() {
-    completed = true;
+    if (!running) return;
     running = false;
     app.classList.remove('running');
     app.classList.add('done');
     germs.forEach(g => g.classList.add('gone'));
     sparkles.forEach(s => s.classList.add('on'));
     try { song.pause(); song.currentTime = 0; } catch(e) {}
-    setTimeout(() => speak('もう一度歯磨きするならリンゴを押してね'), 250);
   }
 
-  startBtn.addEventListener('click', start);
-  startBtn.addEventListener('touchend', (e)=>{ e.preventDefault(); start(); }, {passive:false});
-  againVisible.addEventListener('click', reset);
-  againVisible.addEventListener('touchend', (e)=>{ e.preventDefault(); reset(); }, {passive:false});
+  appleBtn.addEventListener('click', start);
+  appleBtn.addEventListener('touchend', (e)=>{ e.preventDefault(); start(); }, {passive:false});
   song.addEventListener('ended', finish);
   window.addEventListener('pagehide', () => { try { song.pause(); } catch(e){} });
-  reset();
+  resetVisual();
 })();

@@ -1,23 +1,24 @@
-【v13 文字なし版】
+【v14】右下リンゴ・文字なし・新音声版
 
-今回の修正点
-・ベース画像を「文字なし画像」に差し替え
-・画面内のスタート文字、タイマー文字、ゲージ、吹き出し文字は表示しない
-・リンゴボタンだけで開始／もう一度を操作
-・開始前音声「リンゴを押して歯磨き始めてね」
-・終了後音声「もう一度歯磨きするならリンゴを押してね」
-・歯磨き中にバイ菌を順番に隠して、消えていくように見せる
+GitHubの hamigakikun2 フォルダに、以下を上書きアップロードしてください。
 
-GitHubで上書きするファイル
-1. index.html
-2. style-v11.css
-3. app-v11.js
-4. kawaii_ui.jpg
+index.html
+style-v11.css
+app-v11.js
+kawaii_ui.png
+hamigaki_song.m4a
+manifest.webmanifest
 
-重要
-・今回は kawaii_ui.jpg も必ず上書きしてください。
-・これを上書きしないと、前の文字入り画像が残ります。
-・BACKUP_before_v13_v12_improved.zip は保管用です。GitHubへ上書きしなくてOKです。
+確認URL：
+https://marochangame.github.io/hamigakikun2/index.html?v=14
 
-確認URL
-https://marochangame.github.io/hamigakikun2/index.html?v=13
+変更内容：
+・右下の黄色い妖精を削除した画像に変更
+・右下リンゴをスタート／もう一度ボタンとして使用
+・画面内の説明文字なし
+・最初と最後の案内音声なし
+・音声を tempo_corrected_voice(2).m4a に変更
+・バイ菌が徐々に消えるアニメーション
+・画角は横画面いっぱいに表示
+
+バックアップ：BACKUP_before_v14_v13_no_text.zip
