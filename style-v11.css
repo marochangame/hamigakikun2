@@ -24,30 +24,66 @@ body{touch-action:manipulation;user-select:none;-webkit-user-select:none}
 .rotate{display:none;position:fixed;inset:0;place-items:center;background:linear-gradient(135deg,#8feee4,#ffe2ed);font-size:8vw;font-weight:900;color:#123b56;z-index:50}
 @media (orientation:portrait){.rotate{display:grid}.app{display:none}}
 
-/* v19: リンゴを左下へ移動。うさぎには被せない。白丸は削除。 */
-.apple-hit{
-  left:26.5%;
-  right:auto;
-  bottom:6.5%;
-  width:11.5%;
-  height:18.0%;
-  border:0;
-  border-radius:999px;
-  background:transparent;
-  box-shadow:none;
-  display:grid;
-  place-items:center;
-  z-index:20;
-  animation:applePulse 1.55s ease-in-out infinite;
+
+/* === TRUE FINAL CHECKED === */
+/* 右上の絵のリンゴを押すための透明クリック範囲 */
+.apple-hit {
+  position: absolute !important;
+  right: 4.8% !important;
+  top: 7.0% !important;
+  left: auto !important;
+  bottom: auto !important;
+  width: 13.8% !important;
+  height: 18.5% !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  background: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  opacity: 1 !important;
+  z-index: 50 !important;
+  cursor: pointer !important;
+  -webkit-tap-highlight-color: transparent !important;
+  animation: none !important;
 }
-.apple-hit::before{
-  content:"🍎";
-  font-size:7.2vmin;
-  line-height:1;
-  filter:drop-shadow(0 .35vmin .45vmin rgba(110,58,43,.28));
+.apple-hit:active {
+  transform: scale(.98) !important;
 }
-.apple-hit::after{content:none}
-.running .apple-hit::before{content:"🍎"}
-.paused .apple-hit::before,.done .apple-hit::before{content:"🍎"}
-@keyframes applePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
-@media (max-height:430px){.apple-hit{left:27%;bottom:6%;width:10.5%;height:17%}.apple-hit::before{font-size:6.6vmin}}
+
+/* 気持ち悪いピンクの丸＝germ-cover を完全に出さない */
+.germ-cover,
+.germ-cover *,
+.clean-layer {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  animation: none !important;
+  pointer-events: none !important;
+}
+
+/* 念のため、泡・ピンク丸・パーティクル系も止める */
+.bubble,
+.bubbles,
+.pink-bubble,
+.pink-circle,
+.particle,
+.particles,
+.effect,
+.effects,
+.soap-bubble,
+.foam-pop,
+[class*="bubble"],
+[class*="Bubble"],
+[class*="particle"],
+[class*="Particle"],
+[class*="pink"],
+[class*="Pink"],
+[class*="foam"],
+[class*="Foam"] {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  animation: none !important;
+  pointer-events: none !important;
+}

@@ -106,3 +106,56 @@
 
   resetVisual();
 })();
+
+
+// === TRUE FINAL CHECKED GUARD ===
+// 左下リンゴやピンク丸が後から生成された場合も即削除
+(function(){
+  function bad(el){
+    if (!el || el.nodeType !== 1) return false;
+    var c = (el.className || "").toString().toLowerCase();
+    var id = (el.id || "").toLowerCase();
+    var src = "";
+    try { src = (el.getAttribute("src") || "").toLowerCase(); } catch(e) {}
+
+    if (id === "applebtn" || c.includes("apple-hit")) return false;
+
+    return (
+      c.includes("germ-cover") ||
+      c.includes("bubble") ||
+      c.includes("particle") ||
+      c.includes("pink") ||
+      c.includes("foam") ||
+      id.includes("bubble") ||
+      id.includes("particle") ||
+      id.includes("pink") ||
+      id.includes("foam") ||
+      src.includes("apple")
+    );
+  }
+
+  function cleanup(){
+    document.querySelectorAll("*").forEach(function(el){
+      if (bad(el)) el.remove();
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", function(){
+    cleanup();
+    setInterval(cleanup, 300);
+    new MutationObserver(function(ms){
+      ms.forEach(function(m){
+        m.addedNodes.forEach(function(n){
+          if (n && n.nodeType === 1) {
+            if (bad(n)) n.remove();
+            else if (n.querySelectorAll) {
+              n.querySelectorAll("*").forEach(function(el){
+                if (bad(el)) el.remove();
+              });
+            }
+          }
+        });
+      });
+    }).observe(document.body, {childList:true, subtree:true});
+  });
+})();
