@@ -1,17 +1,20 @@
-hamigakikun2 v17
+【hamigakikun2 v16】
 
-変更内容：
-・採用画像に差し替え
-・左右の空きが出にくい全画面表示に調整
-・v16のスタート／ストップ、音声停止、バイ菌消滅アニメは維持
+GitHub の hamigakikun2 に以下6ファイルを上書きしてください。
 
-GitHubには以下を上書きしてください：
-index.html
-style-v11.css
-app-v11.js
-kawaii_ui.png
-hamigaki_song.m4a
-manifest.webmanifest
+1. index.html
+2. style-v11.css
+3. app-v11.js
+4. kawaii_ui.png
+5. hamigaki_song.m4a
+6. manifest.webmanifest
 
 確認URL：
-https://marochangame.github.io/hamigakikun2/index.html?v=17
+https://marochangame.github.io/hamigakikun2/index.html?v=16
+
+変更内容：
+・②のリンゴ「スタート／ストップ」デザインを採用
+・音声を tempo_corrected_voice(3).m4a に差し替え
+・リンゴ押下でスタート／ストップ（音声停止）／再開
+・文字UIの追加なし
+・バイ菌消滅アニメ維持
