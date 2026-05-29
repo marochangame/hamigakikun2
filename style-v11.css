@@ -24,35 +24,30 @@ body{touch-action:manipulation;user-select:none;-webkit-user-select:none}
 .rotate{display:none;position:fixed;inset:0;place-items:center;background:linear-gradient(135deg,#8feee4,#ffe2ed);font-size:8vw;font-weight:900;color:#123b56;z-index:50}
 @media (orientation:portrait){.rotate{display:grid}.app{display:none}}
 
-/* v18: シンプルなリンゴのスタート／ストップボタン */
+/* v19: リンゴを左下へ移動。うさぎには被せない。白丸は削除。 */
 .apple-hit{
-  right:4.2%;
-  bottom:5.0%;
-  width:13.8%;
-  height:22.0%;
+  left:26.5%;
+  right:auto;
+  bottom:6.5%;
+  width:11.5%;
+  height:18.0%;
+  border:0;
   border-radius:999px;
-  background:rgba(255,255,255,.86);
-  border:.55vmin solid rgba(255,255,255,.95);
-  box-shadow:0 .8vmin 0 rgba(125,77,55,.16),0 1.2vmin 2.2vmin rgba(92,49,36,.18);
+  background:transparent;
+  box-shadow:none;
   display:grid;
   place-items:center;
+  z-index:20;
   animation:applePulse 1.55s ease-in-out infinite;
 }
 .apple-hit::before{
   content:"🍎";
-  font-size:8.4vmin;
+  font-size:7.2vmin;
   line-height:1;
-  filter:drop-shadow(0 .25vmin .25vmin rgba(110,58,43,.16));
+  filter:drop-shadow(0 .35vmin .45vmin rgba(110,58,43,.28));
 }
-.apple-hit::after{
-  content:"";
-  position:absolute;
-  inset:9%;
-  border-radius:999px;
-  box-shadow:inset 0 .35vmin .7vmin rgba(255,255,255,.72);
-  pointer-events:none;
-}
+.apple-hit::after{content:none}
 .running .apple-hit::before{content:"🍎"}
 .paused .apple-hit::before,.done .apple-hit::before{content:"🍎"}
-@keyframes applePulse{0%,100%{transform:scale(1);box-shadow:0 .8vmin 0 rgba(125,77,55,.16),0 1.2vmin 2.2vmin rgba(92,49,36,.18)}50%{transform:scale(1.045);box-shadow:0 .8vmin 0 rgba(125,77,55,.16),0 1.2vmin 2.2vmin rgba(92,49,36,.22),0 0 0 .9vmin rgba(255,255,255,.26)}}
-@media (max-height:430px){.apple-hit{width:12.5%;height:21%;right:4%;bottom:4%}.apple-hit::before{font-size:7.5vmin}}
+@keyframes applePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+@media (max-height:430px){.apple-hit{left:27%;bottom:6%;width:10.5%;height:17%}.apple-hit::before{font-size:6.6vmin}}
